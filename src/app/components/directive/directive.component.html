@@ -24,7 +24,7 @@
     </mat-list>
   </mat-drawer>
 
-  <mat-grid-list cols="4" rowHeight="100vh" (scroll)="this.onScroll($event)">
+  <mat-grid-list cols="4" rowHeight="100vh">
       <mat-grid-tile
         [colspan]="4"
         [rowspan]="1">
@@ -43,12 +43,36 @@
 
             <h2 [appHighlight]="color" [aditira]="'Halo Aditira'">Welcome to the party!</h2>
 
-
             <p>Use ngNonBindable to stop evaluation.</p>
             <p >This should not evaluate: {{ angka }}</p>
 
             <h3>ngNonBindable with a directive</h3>
             <div ngNonBindable [appHighlight]="'yellow'">This should not evaluate: {{ 1 + 1 }}, but will highlight yellow.</div>
+
+            <h3>Structural directives</h3>
+
+            <div>
+              <button (click)="showContent = !showContent">Toggle Content</button>
+            
+              <ng-container *ngIf="showContent; then customContent else noContent"></ng-container>
+            
+              <ng-template #customContent>
+                <div>
+                  Ini adalah konten kustom yang ditampilkan ketika tombol diklik.
+                </div>
+              </ng-template>
+            
+              <ng-template #noContent>
+                <div>
+                  Tombol belum diklik, jadi konten kustom tidak ditampilkan.
+                </div>
+              </ng-template>
+            </div>
+
+            <ng-template select [selectFrom]="dataService" let-data>
+              <div>Data loaded: {{data}}</div>
+            </ng-template>
+
           </div>
           <div *ngSwitchCase="'Contact'">
             <h2>Contact Page</h2>

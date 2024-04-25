@@ -37,7 +37,6 @@ export const routes: Routes = [
         path: 'time',
         title: 'Time Page',
         loadComponent: () => import("./shared/components/time/time.component").then(m => m.TimeComponent),
-        // canLoad: [authGuard],
         // canDeactivate: [authGuard],
         canActivate: [authGuard]
     },
@@ -52,6 +51,11 @@ export const routes: Routes = [
         title: 'Directive Page',
         loadComponent: () => import('./components/directive/directive.component').then(m => m.DirectiveComponent),
     },
+    {
+        path: 'module',
+        loadChildren: () => import('./modules/admin.module').then(m => m.AdminModule),
+        canLoad: [authGuard]
+      },
     {
         path: '**',
         title: 'Page Not Found',

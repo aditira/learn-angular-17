@@ -10,6 +10,8 @@ import { HomeComponent } from '../home/home.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { Tile } from '../../interfaces/layout';
 import { HighlightDirective } from '../../directives/highlight.directive';
+import { DataService } from '../../services/data.service';
+import { SelectDirective } from '../../directives/select.directive';
 
 
 @Component({
@@ -26,19 +28,18 @@ import { HighlightDirective } from '../../directives/highlight.directive';
     MatGridListModule,
     CommonModule,
     HomeComponent,
-    HighlightDirective
+    HighlightDirective,
+    SelectDirective
   ],
   templateUrl: './directive.component.html',
   styleUrl: './directive.component.scss'
 })
 export class DirectiveComponent {
   color: string = 'green';
-angka: string = '{{ angka }}';
-  onScroll($event: Event) {
-    console.log($event);
-  }
+  angka: string = '{{ angka }}';
   showFiller = false;
   currentPage: string = "Home";
+  showContent = false;
 
   tiles: Tile[] = [
     {text: 'One', cols: 3, rows: 1, color: 'lightblue'},
@@ -77,10 +78,15 @@ angka: string = '{{ angka }}';
 
   currentClasses: Record<string, boolean> = {};
   currentStyles: Record<string, string> = {};
+  $implicit: any;
+
+  constructor(public dataService: DataService) {}
+
   ngOnInit() {
     this.setCurrentClasses();
     this.setCurrentStyles()
   }
+
 
   setCurrentClasses() {
     // CSS classes: added/removed per current state of component properties
